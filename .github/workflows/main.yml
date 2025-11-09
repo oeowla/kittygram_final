@@ -7,7 +7,7 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:13.10
@@ -30,6 +30,7 @@ jobs:
         python -m pip install --upgrade pip setuptools
         pip install flake8==6.0.0 flake8-isort==6.0.0
         pip install -r ./backend/requirements.txt
+        pip install Django djangorestframework psycopg2-binary
     - name: Test with flake8 and django tests
       env:
         POSTGRES_USER: django_user
