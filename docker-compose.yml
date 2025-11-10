@@ -11,17 +11,20 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
   backend:
+    image: oeowla/kittygram_backend
     build: ./backend/
     env_file: .env
     volumes:
       - static:/backend_static
   frontend:
+    image: oeowla/kittygram_frontend
     env_file: .env
     build: ./frontend/
     command: cp -r /app/build/. /static/
     volumes:
       - static:/static
   gateway:
+    image: oeowla/kittygram_gateway
     build: ./nginx/
     env_file: .env
     ports:
