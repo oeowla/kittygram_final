@@ -154,13 +154,31 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd kittygram
+            cd kittygram
+            
+            # Экранируем $ в SECRET_KEY
+            sed -i 's/\$vmxm4/\\$vmxm4/g' .env
+            
+            # Пуллим и запускаем
             sudo docker compose -f docker-compose.production.yml pull
             sudo docker compose -f docker-compose.production.yml down
             sudo docker compose -f docker-compose.production.yml up -d
-            sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
-            sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
-            sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/
-
+            
+            # Ждем и получаем подробные логи
+            sleep 10
+            echo "=== Backend container status ==="
+            sudo docker ps -a | grep backend
+            
+            echo "=== Backend logs (detailed) ==="
+            sudo docker compose -f docker-compose.production.yml logs backend --tail=50
+            
+            echo "=== Checking if backend can connect to DB ==="
+            # Проверяем доступность БД
+            sudo docker compose -f docker-compose.production.yml exec db pg_isready -U django_user -d django
+            
+            # Пробуем выполнить простую команду в backend
+            echo "=== Testing backend container ==="
+            sudo docker compose -f docker-compose.production.yml exec backend python -c "import django; print('Django:', django.__version__)" || echo "Backend not accessible"
   send_message:
     runs-on: ubuntu-latest
     needs: deploy
