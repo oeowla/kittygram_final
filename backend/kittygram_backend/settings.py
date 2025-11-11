@@ -10,7 +10,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'oeowla.ddns.net',
+    'kittygram128.duckdns.org',
     'localhost',
     '127.0.0.1',
     '89.169.166.143',
