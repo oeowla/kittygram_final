@@ -12,7 +12,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'oeowla.ddns.net',
     'localhost',
-    '127.0.0.1',
+    'kittygram-backend-1',
     '89.169.166.143',
 ]
 
