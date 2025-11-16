@@ -1,4 +1,4 @@
 repo_owner: oeowla
-kittygram_domain: https://github.com/oeowla/kittygram_final
-taski_domain: https://github.com/oeowla/taski-docker
+kittygram_domain: kittygram128.duckdns.org
+taski_domain: http://taski-docker.servehttp.com
 dockerhub_username: oeowla
