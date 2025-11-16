@@ -153,7 +153,7 @@ jobs:
           context: ./gateway/
           push: true
           # Тут вместо username должен быть ваш логин на Docker Hub
-          tags: eowla/kittygram_gateway-1:latest
+          tags: oeowla/kittygram_gateway-1:latest
 
   deploy:
     runs-on: ubuntu-latest
