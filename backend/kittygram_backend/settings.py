@@ -13,6 +13,7 @@ ALLOWED_HOSTS = [
     'kittygram128.duckdns.org',
     'localhost',
     '158.160.29.126',
+    '127.0.0.1',
 ]
 
 INSTALLED_APPS = [
