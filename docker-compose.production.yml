@@ -1,5 +1,3 @@
-cd ~/kittygram
-cat > docker-compose.production.yml << 'EOF'
 volumes:
   kittygram_pg_data:
   static_volume:
