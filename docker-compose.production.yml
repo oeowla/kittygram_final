@@ -3,12 +3,23 @@ volumes:
   static_volume:
   media_volume:
 
+networks:
+  kittygram-network:
+    driver: bridge
+
 services:
   db:
     image: postgres:13.10
     env_file: .env
     volumes:
       - kittygram_pg_data:/var/lib/postgresql/data
+    networks:
+      - kittygram-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kittygram_app -d kittygram_production"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   
   backend:
     image: oeowla/kittygram_backend-1:latest
@@ -16,8 +27,11 @@ services:
     volumes:
       - static_volume:/backend_static
       - media_volume:/mediafiles
+    networks:
+      - kittygram-network
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   
   frontend:
     image: oeowla/kittygram_frontend-1:latest
@@ -25,6 +39,8 @@ services:
     command: cp -r /app/build/. /static/
     volumes:
       - static_volume:/static
+    networks:
+      - kittygram-network
   
   gateway:
     image: oeowla/kittygram_gateway-1:latest
@@ -33,4 +49,8 @@ services:
       - static_volume:/static
       - media_volume:/mediafiles
     ports:
-      - 9000:80
+      - "9000:80"
+    networks:
+      - kittygram-network
+    depends_on:
+      - backend
