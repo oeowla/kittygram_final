@@ -10,10 +10,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'kittygram-backend-1',
     'kittygram128.duckdns.org',
     'localhost',
-    '89.169.166.143',
+    '158.160.29.126',
 ]
 
 INSTALLED_APPS = [
