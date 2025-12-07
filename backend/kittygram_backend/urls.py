@@ -4,11 +4,11 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from cats.views import CatViewSet, AchievementViewSet
+from cats.views import AchievementViewSet, CatViewSet
 
 router = routers.DefaultRouter()
-router.register('cats', CatViewSet)
 router.register('achievements', AchievementViewSet)
+router.register('cats', CatViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
