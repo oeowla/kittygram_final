@@ -7,8 +7,8 @@ from rest_framework import routers
 from cats.views import AchievementViewSet, CatViewSet
 
 router = routers.DefaultRouter()
-router.register(r'cats', CatViewSet)
-router.register(r'achievements', AchievementViewSet)
+router.register('cats', CatViewSet)
+router.register('achievements', AchievementViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,5 +18,6 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )
