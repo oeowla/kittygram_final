@@ -1,28 +1,39 @@
+cd ~/kittygram
+cat > docker-compose.production.yml << 'EOF'
 volumes:
-  pg_data_production:
+  kittygram_pg_data:
   static_volume:
+  media_volume:
 
 services:
   db:
     image: postgres:13.10
     env_file: .env
     volumes:
-      - pg_data_production:/var/lib/postgresql/data
+      - kittygram_pg_data:/var/lib/postgresql/data
+  
   backend:
     image: oeowla/kittygram_backend-1:latest
     env_file: .env
     volumes:
       - static_volume:/backend_static
+      - media_volume:/mediafiles
+    depends_on:
+      - db
+  
   frontend:
     image: oeowla/kittygram_frontend-1:latest
     env_file: .env
     command: cp -r /app/build/. /static/
     volumes:
       - static_volume:/static
+  
   gateway:
     image: oeowla/kittygram_gateway-1:latest
     env_file: .env
     volumes:
       - static_volume:/static
+      - media_volume:/mediafiles
     ports:
       - 9000:80
+EOF
